@@ -1,0 +1,105 @@
+// Prisma Schema – Wash Wizard
+// Reflects the domain model: User, Appointment, LaundryMachine, Notice, Report, Notification
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ── USER ──────────────────────────────────────────────────────────────────────
+// Covers both Student and Employee from the domain model.
+// Role field distinguishes between the two.
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String   @unique
+  studentId      String?  @unique
+  hashedPassword String
+  role           Role     @default(STUDENT)
+  loyaltyPoints  Int      @default(0)
+  createdAt      DateTime @default(now())
+
+  appointments  Appointment[]
+  reports       Report[]
+  notifications Notification[]
+}
+
+enum Role {
+  STUDENT
+  EMPLOYEE
+}
+
+// ── LAUNDRY MACHINE ───────────────────────────────────────────────────────────
+
+model LaundryMachine {
+  id            Int      @id @default(autoincrement())
+  machineNumber Int      @unique
+  status        MachineStatus @default(AVAILABLE)
+
+  appointments Appointment[]
+}
+
+enum MachineStatus {
+  AVAILABLE
+  IN_USE
+  OUT_OF_ORDER
+}
+
+// ── APPOINTMENT ───────────────────────────────────────────────────────────────
+
+model Appointment {
+  id        Int               @id @default(autoincrement())
+  userId    Int
+  machineId Int
+  startTime DateTime
+  endTime   DateTime
+  status    AppointmentStatus @default(BOOKED)
+  createdAt DateTime          @default(now())
+
+  user    User           @relation(fields: [userId], references: [id])
+  machine LaundryMachine @relation(fields: [machineId], references: [id])
+}
+
+enum AppointmentStatus {
+  BOOKED
+  CANCELLED
+  COMPLETED
+}
+
+// ── NOTICE ────────────────────────────────────────────────────────────────────
+
+model Notice {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  datePosted  DateTime @default(now())
+}
+
+// ── REPORT ────────────────────────────────────────────────────────────────────
+
+model Report {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  description   String
+  dateSubmitted DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// ── NOTIFICATION ──────────────────────────────────────────────────────────────
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  message   String
+  timestamp DateTime @default(now())
+  read      Boolean  @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+}
