@@ -8,7 +8,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./wash_wizard.db"
 }
 
 // ── USER ──────────────────────────────────────────────────────────────────────
@@ -54,13 +54,15 @@ enum MachineStatus {
 // ── APPOINTMENT ───────────────────────────────────────────────────────────────
 
 model Appointment {
-  id        Int               @id @default(autoincrement())
-  userId    Int
-  machineId Int
-  startTime DateTime
-  endTime   DateTime
-  status    AppointmentStatus @default(BOOKED)
-  createdAt DateTime          @default(now())
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  machineId       Int
+  startTime       DateTime
+  endTime         DateTime
+  status          AppointmentStatus @default(BOOKED)
+  expiredAt       DateTime?
+  notifiedFiveMin Boolean           @default(false)
+  createdAt       DateTime          @default(now())
 
   user    User           @relation(fields: [userId], references: [id])
   machine LaundryMachine @relation(fields: [machineId], references: [id])
@@ -68,8 +70,11 @@ model Appointment {
 
 enum AppointmentStatus {
   BOOKED
-  CANCELLED
+  PENDING_START
+  IN_USE
   COMPLETED
+  CANCELLED
+  EXPIRED
 }
 
 // ── NOTICE ────────────────────────────────────────────────────────────────────

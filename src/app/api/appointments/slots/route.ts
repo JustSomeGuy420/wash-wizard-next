@@ -17,7 +17,7 @@ export async function GET() {
     include: {
       appointments: {
         where: {
-          status: "BOOKED",
+          status: { in: ["BOOKED", "PENDING_START", "IN_USE"] },
           startTime: { gte: startOfDay },
           endTime: { lte: endOfDay },
         },
@@ -25,6 +25,7 @@ export async function GET() {
           id: true,
           startTime: true,
           endTime: true,
+          status: true,
         },
       },
     },
@@ -32,3 +33,4 @@ export async function GET() {
  
   return NextResponse.json(machines)
 }
+ 

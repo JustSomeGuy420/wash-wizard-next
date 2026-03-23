@@ -28,8 +28,11 @@ export type MachineStatus = (typeof MachineStatus)[keyof typeof MachineStatus]
 
 export const AppointmentStatus = {
   BOOKED: 'BOOKED',
+  PENDING_START: 'PENDING_START',
+  IN_USE: 'IN_USE',
+  COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED',
-  COMPLETED: 'COMPLETED'
+  EXPIRED: 'EXPIRED'
 } as const
 
 export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]

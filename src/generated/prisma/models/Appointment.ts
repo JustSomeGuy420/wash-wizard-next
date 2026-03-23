@@ -45,6 +45,8 @@ export type AppointmentMinAggregateOutputType = {
   startTime: Date | null
   endTime: Date | null
   status: $Enums.AppointmentStatus | null
+  expiredAt: Date | null
+  notifiedFiveMin: boolean | null
   createdAt: Date | null
 }
 
@@ -55,6 +57,8 @@ export type AppointmentMaxAggregateOutputType = {
   startTime: Date | null
   endTime: Date | null
   status: $Enums.AppointmentStatus | null
+  expiredAt: Date | null
+  notifiedFiveMin: boolean | null
   createdAt: Date | null
 }
 
@@ -65,6 +69,8 @@ export type AppointmentCountAggregateOutputType = {
   startTime: number
   endTime: number
   status: number
+  expiredAt: number
+  notifiedFiveMin: number
   createdAt: number
   _all: number
 }
@@ -89,6 +95,8 @@ export type AppointmentMinAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  expiredAt?: true
+  notifiedFiveMin?: true
   createdAt?: true
 }
 
@@ -99,6 +107,8 @@ export type AppointmentMaxAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  expiredAt?: true
+  notifiedFiveMin?: true
   createdAt?: true
 }
 
@@ -109,6 +119,8 @@ export type AppointmentCountAggregateInputType = {
   startTime?: true
   endTime?: true
   status?: true
+  expiredAt?: true
+  notifiedFiveMin?: true
   createdAt?: true
   _all?: true
 }
@@ -206,6 +218,8 @@ export type AppointmentGroupByOutputType = {
   startTime: Date
   endTime: Date
   status: $Enums.AppointmentStatus
+  expiredAt: Date | null
+  notifiedFiveMin: boolean
   createdAt: Date
   _count: AppointmentCountAggregateOutputType | null
   _avg: AppointmentAvgAggregateOutputType | null
@@ -239,6 +253,8 @@ export type AppointmentWhereInput = {
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+  expiredAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFilter<"Appointment"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   machine?: Prisma.XOR<Prisma.LaundryMachineScalarRelationFilter, Prisma.LaundryMachineWhereInput>
@@ -251,6 +267,8 @@ export type AppointmentOrderByWithRelationInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  expiredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  notifiedFiveMin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   machine?: Prisma.LaundryMachineOrderByWithRelationInput
@@ -266,6 +284,8 @@ export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+  expiredAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFilter<"Appointment"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   machine?: Prisma.XOR<Prisma.LaundryMachineScalarRelationFilter, Prisma.LaundryMachineWhereInput>
@@ -278,6 +298,8 @@ export type AppointmentOrderByWithAggregationInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  expiredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  notifiedFiveMin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AppointmentCountOrderByAggregateInput
   _avg?: Prisma.AppointmentAvgOrderByAggregateInput
@@ -296,6 +318,8 @@ export type AppointmentScalarWhereWithAggregatesInput = {
   startTime?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   status?: Prisma.EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
+  expiredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Appointment"> | Date | string | null
+  notifiedFiveMin?: Prisma.BoolWithAggregatesFilter<"Appointment"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
 }
 
@@ -303,6 +327,8 @@ export type AppointmentCreateInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAppointmentsInput
   machine: Prisma.LaundryMachineCreateNestedOneWithoutAppointmentsInput
@@ -315,6 +341,8 @@ export type AppointmentUncheckedCreateInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -322,6 +350,8 @@ export type AppointmentUpdateInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAppointmentsNestedInput
   machine?: Prisma.LaundryMachineUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -334,6 +364,8 @@ export type AppointmentUncheckedUpdateInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -344,6 +376,8 @@ export type AppointmentCreateManyInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -351,6 +385,8 @@ export type AppointmentUpdateManyMutationInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -361,6 +397,8 @@ export type AppointmentUncheckedUpdateManyInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -381,6 +419,8 @@ export type AppointmentCountOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  expiredAt?: Prisma.SortOrder
+  notifiedFiveMin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -397,6 +437,8 @@ export type AppointmentMaxOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  expiredAt?: Prisma.SortOrder
+  notifiedFiveMin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -407,6 +449,8 @@ export type AppointmentMinOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  expiredAt?: Prisma.SortOrder
+  notifiedFiveMin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -504,10 +548,20 @@ export type EnumAppointmentStatusFieldUpdateOperationsInput = {
   set?: $Enums.AppointmentStatus
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type AppointmentCreateWithoutUserInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
   machine: Prisma.LaundryMachineCreateNestedOneWithoutAppointmentsInput
 }
@@ -518,6 +572,8 @@ export type AppointmentUncheckedCreateWithoutUserInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -556,6 +612,8 @@ export type AppointmentScalarWhereInput = {
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+  expiredAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFilter<"Appointment"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
 }
 
@@ -563,6 +621,8 @@ export type AppointmentCreateWithoutMachineInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAppointmentsInput
 }
@@ -573,6 +633,8 @@ export type AppointmentUncheckedCreateWithoutMachineInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -607,6 +669,8 @@ export type AppointmentCreateManyUserInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -614,6 +678,8 @@ export type AppointmentUpdateWithoutUserInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   machine?: Prisma.LaundryMachineUpdateOneRequiredWithoutAppointmentsNestedInput
 }
@@ -624,6 +690,8 @@ export type AppointmentUncheckedUpdateWithoutUserInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -633,6 +701,8 @@ export type AppointmentUncheckedUpdateManyWithoutUserInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -642,6 +712,8 @@ export type AppointmentCreateManyMachineInput = {
   startTime: Date | string
   endTime: Date | string
   status?: $Enums.AppointmentStatus
+  expiredAt?: Date | string | null
+  notifiedFiveMin?: boolean
   createdAt?: Date | string
 }
 
@@ -649,6 +721,8 @@ export type AppointmentUpdateWithoutMachineInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAppointmentsNestedInput
 }
@@ -659,6 +733,8 @@ export type AppointmentUncheckedUpdateWithoutMachineInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -668,6 +744,8 @@ export type AppointmentUncheckedUpdateManyWithoutMachineInput = {
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notifiedFiveMin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -680,6 +758,8 @@ export type AppointmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  expiredAt?: boolean
+  notifiedFiveMin?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   machine?: boolean | Prisma.LaundryMachineDefaultArgs<ExtArgs>
@@ -692,6 +772,8 @@ export type AppointmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  expiredAt?: boolean
+  notifiedFiveMin?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   machine?: boolean | Prisma.LaundryMachineDefaultArgs<ExtArgs>
@@ -704,6 +786,8 @@ export type AppointmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  expiredAt?: boolean
+  notifiedFiveMin?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   machine?: boolean | Prisma.LaundryMachineDefaultArgs<ExtArgs>
@@ -716,10 +800,12 @@ export type AppointmentSelectScalar = {
   startTime?: boolean
   endTime?: boolean
   status?: boolean
+  expiredAt?: boolean
+  notifiedFiveMin?: boolean
   createdAt?: boolean
 }
 
-export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "machineId" | "startTime" | "endTime" | "status" | "createdAt", ExtArgs["result"]["appointment"]>
+export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "machineId" | "startTime" | "endTime" | "status" | "expiredAt" | "notifiedFiveMin" | "createdAt", ExtArgs["result"]["appointment"]>
 export type AppointmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   machine?: boolean | Prisma.LaundryMachineDefaultArgs<ExtArgs>
@@ -746,6 +832,8 @@ export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     startTime: Date
     endTime: Date
     status: $Enums.AppointmentStatus
+    expiredAt: Date | null
+    notifiedFiveMin: boolean
     createdAt: Date
   }, ExtArgs["result"]["appointment"]>
   composites: {}
@@ -1178,6 +1266,8 @@ export interface AppointmentFieldRefs {
   readonly startTime: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly endTime: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly status: Prisma.FieldRef<"Appointment", 'AppointmentStatus'>
+  readonly expiredAt: Prisma.FieldRef<"Appointment", 'DateTime'>
+  readonly notifiedFiveMin: Prisma.FieldRef<"Appointment", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Appointment", 'DateTime'>
 }
     

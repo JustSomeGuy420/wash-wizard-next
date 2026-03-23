@@ -39,12 +39,21 @@ export default function AppointmentsPage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [booking, setBooking] = useState(false)
+  const [filter, setFilter] = useState<"Today" | "All" | "BOOKED" | "COMPLETED" | "CANCELLED" | "EXPIRED">("Today")
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
+  })
+
+  const filteredAppointments = appointments.filter((a) => {
+    if (filter === "Today") {
+      return new Date(a.startTime).toDateString() === new Date().toDateString()
+    }
+    if (filter === "All") return true
+    return a.status === filter
   })
 
   useEffect(() => {
@@ -190,14 +199,14 @@ export default function AppointmentsPage() {
                       <tr key={machine.id} className="border-t border-gray-100">
                         <td className="py-2 pr-4 font-medium text-gray-700">
                           M#{machine.machineNumber}
-                          {machine.status !== "AVAILABLE" && (
-                            <span className="ml-1 text-red-400">({machine.status})</span>
+                          {machine.status === "OUT_OF_ORDER" && (
+                            <span className="ml-1 text-red-400">(OUT OF ORDER)</span>
                           )}
                         </td>
                         {TIME_SLOTS.map((s) => {
                           const booked = isSlotBooked(machine, s.hour)
                           const past = isSlotPast(s.hour)
-                          const unavailable = machine.status !== "AVAILABLE"
+                          const outOfOrder = machine.status === "OUT_OF_ORDER"
                           const isSelected =
                             selected?.machineId === machine.id && selected?.hour === s.hour
 
@@ -208,7 +217,7 @@ export default function AppointmentsPage() {
                             cellClass += "bg-blue-500 border-blue-600"
                           } else if (booked) {
                             cellClass += "bg-red-100 border-red-200 cursor-not-allowed"
-                          } else if (past || unavailable) {
+                          } else if (past || outOfOrder) {
                             cellClass += "bg-gray-100 border-gray-200 cursor-not-allowed"
                           } else {
                             cellClass += "bg-green-100 border-green-300 hover:bg-green-200"
@@ -219,7 +228,7 @@ export default function AppointmentsPage() {
                               <div
                                 className={cellClass}
                                 onClick={() => {
-                                  if (!booked && !past && !unavailable) {
+                                  if (!booked && !past && !outOfOrder) {
                                     setSelected(
                                       isSelected ? null : { machineId: machine.id, hour: s.hour }
                                     )
@@ -271,13 +280,31 @@ export default function AppointmentsPage() {
         </section>
 
         {/* Appointments list */}
-        <h2 className="text-lg font-bold mb-4">My Appointments</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold">My Appointments</h2>
+          <div className="flex gap-2">
+            {(["Today", "All", "BOOKED", "COMPLETED", "CANCELLED", "EXPIRED"] as const).map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+                  filter === f
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-500 border hover:border-blue-400 hover:text-blue-600"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {loading ? (
           <p className="text-sm text-gray-400">Loading…</p>
-        ) : appointments.length === 0 ? (
-          <p className="text-sm text-gray-400">No appointments yet.</p>
+        ) : filteredAppointments.length === 0 ? (
+          <p className="text-sm text-gray-400">No appointments found.</p>
         ) : (
-          appointments.map((a) => (
+          filteredAppointments.map((a) => (
             <div
               key={a.id}
               className="bg-white rounded-xl shadow-sm p-4 mb-3 flex items-center justify-between"
@@ -305,4 +332,3 @@ export default function AppointmentsPage() {
     </main>
   )
 }
-

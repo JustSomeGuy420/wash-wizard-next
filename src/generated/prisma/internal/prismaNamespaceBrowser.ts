@@ -100,6 +100,8 @@ export const AppointmentScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
+  expiredAt: 'expiredAt',
+  notifiedFiveMin: 'notifiedFiveMin',
   createdAt: 'createdAt'
 } as const
 
